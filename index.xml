@@ -10,61 +10,61 @@
     <link>https://kyhoon.github.io/quartz/</link>
     <guid>https://kyhoon.github.io/quartz/</guid>
     <description>👋 Welcome This is where I put whatever I’m currently reading or interested in — mostly papers, notes, and personal reflections.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item><item>
     <title>A Comprehensive Review of Recommender Systems - Transitioning from Theory to Practice</title>
     <link>https://kyhoon.github.io/quartz/recsys/A-Comprehensive-Review-of-Recommender-Systems---Transitioning-from-Theory-to-Practice</link>
     <guid>https://kyhoon.github.io/quartz/recsys/A-Comprehensive-Review-of-Recommender-Systems---Transitioning-from-Theory-to-Practice</guid>
     <description>Abstract Recommender Systems (RS) play an integral role in enhancing user experiences by providing personalized item suggestions.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item><item>
     <title>Adaptive Multi-Modalities Fusion in Sequential Recommendation Systems</title>
     <link>https://kyhoon.github.io/quartz/recsys/Adaptive-Multi-Modalities-Fusion-in-Sequential-Recommendation-Systems</link>
     <guid>https://kyhoon.github.io/quartz/recsys/Adaptive-Multi-Modalities-Fusion-in-Sequential-Recommendation-Systems</guid>
     <description>Abstract In sequential recommendation, multi-modal information (e.g., text or image) can provide a more comprehensive view of an item’s profile.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item><item>
     <title>Bayesian Knowledge-driven Critiquing with Indirect Evidence</title>
     <link>https://kyhoon.github.io/quartz/recsys/Bayesian-Knowledge-driven-Critiquing-with-Indirect-Evidence</link>
     <guid>https://kyhoon.github.io/quartz/recsys/Bayesian-Knowledge-driven-Critiquing-with-Indirect-Evidence</guid>
     <description>Abstract Conversational recommender systems (CRS) enhance the expressivity and personalization of recommendations through multiple turns of user-system interaction.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item><item>
     <title>Bias Reduction News Recommendation System</title>
     <link>https://kyhoon.github.io/quartz/recsys/Bias-Reduction-News-Recommendation-System</link>
     <guid>https://kyhoon.github.io/quartz/recsys/Bias-Reduction-News-Recommendation-System</guid>
     <description>Abstract News recommender systems (NRS) are crucial for helping users navigate the vast amount of content available online.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item><item>
     <title>DiffKG - Knowledge Graph Diffusion Model for Recommendation</title>
     <link>https://kyhoon.github.io/quartz/recsys/DiffKG---Knowledge-Graph-Diffusion-Model-for-Recommendation</link>
     <guid>https://kyhoon.github.io/quartz/recsys/DiffKG---Knowledge-Graph-Diffusion-Model-for-Recommendation</guid>
     <description>Abstract Knowledge Graphs (KGs) have emerged as invaluable resources for enriching recommendation systems by providing a wealth of factual information and capturing semantic relationships among items.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item><item>
     <title>Dynamic Graph Neural Networks for Sequential Recommendation</title>
     <link>https://kyhoon.github.io/quartz/recsys/Dynamic-Graph-Neural-Networks-for-Sequential-Recommendation</link>
     <guid>https://kyhoon.github.io/quartz/recsys/Dynamic-Graph-Neural-Networks-for-Sequential-Recommendation</guid>
     <description>Abstract Modeling user preference from his historical sequences is one of the core problems of sequential recommendation.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item><item>
     <title>Explainable Fairness in Recommendation</title>
     <link>https://kyhoon.github.io/quartz/recsys/Explainable-Fairness-in-Recommendation</link>
     <guid>https://kyhoon.github.io/quartz/recsys/Explainable-Fairness-in-Recommendation</guid>
     <description>Abstract Existing research on fairness-aware recommendation has mainly focused on the quantification of fairness and the development of fair recommendation models, neither of which studies a more substantial problem—identifying the underlying reason of model disparity in recommendation.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item><item>
     <title>Fairness among New Items in Cold Start Recommender Systems</title>
     <link>https://kyhoon.github.io/quartz/recsys/Fairness-among-New-Items-in-Cold-Start-Recommender-Systems</link>
     <guid>https://kyhoon.github.io/quartz/recsys/Fairness-among-New-Items-in-Cold-Start-Recommender-Systems</guid>
     <description>Abstract This paper investigates recommendation fairness among new items.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item><item>
     <title>Frequency Enhanced Hybrid Attention Network for Sequential Recommendation</title>
     <link>https://kyhoon.github.io/quartz/recsys/Frequency-Enhanced-Hybrid-Attention-Network-for-Sequential-Recommendation</link>
     <guid>https://kyhoon.github.io/quartz/recsys/Frequency-Enhanced-Hybrid-Attention-Network-for-Sequential-Recommendation</guid>
     <description>Abstract The self-attention mechanism, which equips with a strong capability of modeling long-range dependencies, is one of the extensively used techniques in the sequential recommendation field.</description>
-    <pubDate>Mon, 19 May 2025 05:34:16 GMT</pubDate>
+    <pubDate>Mon, 19 May 2025 05:36:08 GMT</pubDate>
   </item>
     </channel>
   </rss>
