@@ -1,11 +1,13 @@
 ---
 url: https://arxiv.org/abs/2104.07368
+tags:
+  - paper
 ---
-### Abstract
+## Abstract
 
 Modeling user preference from his historical sequences is one of the core problems of sequential recommendation. Existing methods in this field are widely distributed from conventional methods to deep learning methods. However, most of them only model users’ interests within their own sequences and ignore the dynamic collaborative signals among different user sequences, making it insufficient to explore users’ preferences. We take inspiration from dynamic graph neural networks to cope with this challenge, modeling the user sequence and dynamic collaborative signals into one framework. We propose a new method named Dynamic Graph Neural Network for Sequential Recommendation (DGSR), which connects different user sequences through a dynamic graph structure, exploring the interactive behavior of users and items with time and order information. Furthermore, we design a Dynamic Graph Recommendation Network to extract user’s preferences from the dynamic graph. Consequently, the next-item prediction task in sequential recommendation is converted into a link prediction between the user node and the item node in a dynamic graph. Extensive experiments on three public benchmarks show that DGSR outperforms several state-of-the-art methods. Further studies demonstrate the rationality and effectiveness of modeling user sequences through a dynamic graph.
 
-### Introduction
+## Introduction
 
 Although these methods have achieved compelling results, we argue that these methods lack explicit modeling of the **dynamic collaborative signals** among different user sequences
 
@@ -21,7 +23,7 @@ Secondly, we devise a sub-graph sampling strategy (Section 4.2) to dynamically e
 
 Thirdly, to encode user’s preference from the sub-graph, we design a Dynamic Graph Recommendation Network (DGRN) (Section 4.3), in which a dynamic attention module is constructed to capture the long-term preference of users and long-term character of items, and a recurrent neural module or attention module is further utilized to learn short-term preference and character of users and items, respectively.
 
-### Methodology
+## Methodology
 
 **Dynamic Graph Construction**
 

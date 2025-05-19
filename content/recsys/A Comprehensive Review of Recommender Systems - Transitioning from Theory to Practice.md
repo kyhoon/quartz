@@ -1,12 +1,15 @@
 ---
 url: https://arxiv.org/abs/2407.13699
 github: https://github.com/VectorInstitute/Recommender-Systems-Survey
+tags:
+  - paper
+  - survey
 ---
-### Abstract
+## Abstract
 
 Recommender Systems (RS) play an integral role in enhancing user experiences by providing personalized item suggestions. This survey reviews the progress in RS inclusively from 2017 to 2024, effectively connecting theoretical advances with practical applications. We explore the development from traditional RS techniques like content-based and collaborative filtering to advanced methods involving deep learning, graph-based models, reinforcement learning, and large language models. We also discuss specialized systems such as context-aware, review-based, and fairness-aware RS. The primary goal of this survey is to bridge theory with practice. It addresses challenges across various sectors, including e-commerce, healthcare, and finance, emphasizing the need for scalable, real-time, and trustworthy solutions. Through this survey, we promote stronger partnerships between academic research and industry practices. The insights offered by this survey aim to guide industry professionals in optimizing RS deployment and to inspire future research directions, especially in addressing emerging technological and societal trends2 . The survey resources are available in the public GitHub repository https://github.com/VectorInstitute/Recommender-Systems-Survey.
 
-### Introduction
+## Introduction
 
 **Main Contributions**
 1. This survey provides a comprehensive review of RS, tracing their development from theoretical foundations to practical applications between **2017 and 2023**. It is the first survey to specifically highlight the translation of theoretical advancements into practical solutions for industry challenges.
@@ -29,7 +32,7 @@ Traditional RS methods can be categorized into collaborative filtering, content-
 
 ![[Pasted image 20250518181352.png]]
 
-### Modeling Techniques
+## Modeling Techniques
 
 **Graph-based Recommender Systems**
 
@@ -44,6 +47,7 @@ GNNs can effectively address various practical challenges by modeling complex re
 Sequential recommendation is commonly viewed as a next-item or next-basket prediction challenge [37]. Both the sequential and session-based RS leverage user action sequences to anticipate users’ future preferences [95]. Specifically, sequential RS consider the interaction histories of the users to predict future behaviour or users’ preferences. In contrast, session-based RS, detailed in survey [38], focus on short-term user activity for real-time recommendations. These approaches collectively enhance personalization and relevance across diverse platforms.
 
 [[Frequency Enhanced Hybrid Attention Network for Sequential Recommendation]]
+
 [[Knowledge Prompt-tuning for Sequential Recommendation]]
 
 **Knowledge-based Recommender Systems**
@@ -86,7 +90,7 @@ Collaborative Cross Networks (CoNet) [351] utilizes deep transfer learning. Mult
 [[Adaptive Multi-Modalities Fusion in Sequential Recommendation Systems]]
 [[PromptMM - Multi-Modal Knowledge Distillation for Recommendation with Prompt-Tuning]]
 
-### Specialized Recommender Systems
+## Specialized Recommender Systems
 
 **Context-aware Recommender Systems**
 
@@ -125,9 +129,10 @@ Adversarial learning further enhances fairness by learning representations that 
 **Post-Processing Fairness Methods** Post-processing methods involve adjusting the initial output of a recommendation model to satisfy certain fairness criteria before presenting the final recommendations to users.
 
 [[Bias Reduction News Recommendation System]]
+
 [[Fairness among New Items in Cold Start Recommender Systems]]
 
-### Applications
+## Applications
 
 Numerous platforms have leveraged advanced RS technologies to enhance user engagement and content personalization. YouTube employs deep neural networks to refine its recommendation process, focusing on optimal ranking and selection of videos [488]. Google Play utilizes both linear models and neural networks within its Wide & Deep Learning framework to achieve a balance between memorization and generalization [97]. LinkedIn enhances job and content recommendation using real-time processing and scoring mechanisms, integrating CF and deep learning to match job seekers with suitable opportunities [132, 489]. Twitter customizes its content recommendations, like tweets and follower suggestions, based on user behavior and preferences [490].
 
