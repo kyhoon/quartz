@@ -41,15 +41,14 @@ GNNs can effectively address various practical challenges by modeling complex re
 
 ![[Pasted image 20250518182006.png]]
 
-[[Dynamic Graph Neural Networks for Sequential Recommendation]]
+- [[Dynamic Graph Neural Networks for Sequential Recommendation]]
 
 **Sequential and Session-based Recommender Systems**
 
 Sequential recommendation is commonly viewed as a next-item or next-basket prediction challenge [37]. Both the sequential and session-based RS leverage user action sequences to anticipate users’ future preferences [95]. Specifically, sequential RS consider the interaction histories of the users to predict future behaviour or users’ preferences. In contrast, session-based RS, detailed in survey [38], focus on short-term user activity for real-time recommendations. These approaches collectively enhance personalization and relevance across diverse platforms.
 
-[[Frequency Enhanced Hybrid Attention Network for Sequential Recommendation]]
-
-[[Knowledge Prompt-tuning for Sequential Recommendation]]
+- [[Frequency Enhanced Hybrid Attention Network for Sequential Recommendation]]
+- [[Knowledge Prompt-tuning for Sequential Recommendation]]
 
 **Knowledge-based Recommender Systems**
 
@@ -63,14 +62,14 @@ A KG is a directed graph G = (V, E), where V and E represent entities and relati
 
 Overall, these systems enable more contextually aware, personalized, and efficient recommendation systems, significantly improving user experience across these sectors.
 
-[[Bayesian Knowledge-driven Critiquing with Indirect Evidence]]
-[[DiffKG - Knowledge Graph Diffusion Model for Recommendation]]
+- [[Bayesian Knowledge-driven Critiquing with Indirect Evidence]]
+- [[DiffKG - Knowledge Graph Diffusion Model for Recommendation]]
 
 **Reinforcement Learning-based Recommender Systems**
 
 By employing techniques such as deep Q-networks and policy gradient methods, RL-based recommender systems **continuously refine** their decision-making processes, leading to improved long-term user engagement and satisfaction.
 
-[[Towards Hierarchical Policy Learning for Conversational Recommendation with Hypergraph-based Reinforcement Learning]]
+- [[Towards Hierarchical Policy Learning for Conversational Recommendation with Hypergraph-based Reinforcement Learning]]
 
 **Large Language Model based Recommender Systems**
 
@@ -80,7 +79,7 @@ Prompt-based and in-context learning (ICL) approaches have leveraged the adaptab
 
 LLMs have advanced RS by addressing key challenges such as the cold-start problem, enhancing personalization, and improving accuracy.
 
-[[RecMind - Large Language Model Powered Agent For Recommendation]]
+- [[RecMind - Large Language Model Powered Agent For Recommendation]]
 
 **Multimodal Recommender Systems**
 
@@ -88,8 +87,8 @@ The evolution of multi-modal RS began with the introduction of Visual Bayesian P
 
 Collaborative Cross Networks (CoNet) [351] utilizes deep transfer learning. Multi-Modality enriched Sequential Recommendation (MMSR) [249], a graph-based model, adaptively fuses multi-modal information to dynamically prioritize modalities based on their sequential relationships.
 
-[[Adaptive Multi-Modalities Fusion in Sequential Recommendation Systems]]
-[[PromptMM - Multi-Modal Knowledge Distillation for Recommendation with Prompt-Tuning]]
+- [[Adaptive Multi-Modalities Fusion in Sequential Recommendation Systems]]
+- [[PromptMM - Multi-Modal Knowledge Distillation for Recommendation with Prompt-Tuning]]
 
 ## Specialized Recommender Systems
 
@@ -115,7 +114,7 @@ Advancements in explainable and trustworthy RS have evolved, starting with phras
 
 Recent efforts like the Counterfactual Explainable Fairness (CEF) framework focus on identifying and mitigating fairness issues in RS [397].
 
-[[Explainable Fairness in Recommendation]]
+- [[Explainable Fairness in Recommendation]]
 
 **Fairness, Accountability, Transparency, and Ethics (FATE) in Recommender Systems**
 
@@ -129,9 +128,8 @@ Adversarial learning further enhances fairness by learning representations that 
 
 **Post-Processing Fairness Methods** Post-processing methods involve adjusting the initial output of a recommendation model to satisfy certain fairness criteria before presenting the final recommendations to users.
 
-[[Bias Reduction News Recommendation System]]
-
-[[Fairness among New Items in Cold Start Recommender Systems]]
+- [[Bias Reduction News Recommendation System]]
+- [[Fairness among New Items in Cold Start Recommender Systems]]
 
 ## Applications
 
