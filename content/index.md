@@ -9,7 +9,7 @@ This is where I put whatever I’m currently reading or interested in — mostly
 
 - **Recommender Systems**  
   → See: [recsys](/recsys/)
-* **Robotics**
+* **Robotics** 
   → See: [robotics](/robotics/)
 
 
