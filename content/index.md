@@ -7,9 +7,9 @@ This is where I put whatever I’m currently reading or interested in — mostly
 ## 📚 Topics
 
 - **Recommender Systems**  
-  → See: [recsys](/recsys/)
+  → See: [RecSys](/RecSys/)
 * **Robotics**  
-  → See: [robotics](/robotics/)
+  → See: [Robotics](/Robotics/)
 
 
 Feel free to explore via the graph view (top right), tags, or backlinks. Everything is a work in progress — and that’s the point.
