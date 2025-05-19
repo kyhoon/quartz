@@ -1,3 +1,6 @@
+---
+title: Welcome
+---
 # 👋 Welcome
 
 This is where I put whatever I’m currently reading or interested in — mostly papers, notes, and personal reflections.
