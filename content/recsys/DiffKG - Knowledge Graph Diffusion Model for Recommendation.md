@@ -3,6 +3,7 @@ url: https://arxiv.org/abs/2312.16890
 github: https://github.com/HKUDS/DiffKG
 tags:
   - paper
+  - recsys
 ---
 ## Abstract
 

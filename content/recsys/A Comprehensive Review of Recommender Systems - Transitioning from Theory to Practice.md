@@ -4,6 +4,7 @@ github: https://github.com/VectorInstitute/Recommender-Systems-Survey
 tags:
   - paper
   - survey
+  - recsys
 ---
 ## Abstract
 
