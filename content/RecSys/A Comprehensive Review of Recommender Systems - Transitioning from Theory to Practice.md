@@ -54,7 +54,7 @@ Sequential recommendation is commonly viewed as a next-item or next-basket predi
 
 A KG is a directed graph G = (V, E), where V and E represent entities and relations between them, respectively, with E ⊆ V × V . It includes entity type function Φ : V → A and relation type function Ψ : E → R, mapping entities to types A and relations to types R. KGs are depicted as sets of triples ⟨eh, r, et⟩, signifying a relation r from eh to et.
 
-**Embedding-based** approaches focus on learning and applying embeddings to represent KG entities (nodes) and relations (edges), enhancing user and item representations. They typically start with initial embedding generation using models like TransE [309], TransD [198], and node2vec [310], **followed by** their application in RS through attention mechanisms in KSR [229] or generative models like BEM [176] and KTGAN [311].
+**Embedding-based** approaches focus on learning and applying embeddings to represent KG entities (nodes) and relations (edges), enhancing user and item representations. They typically start with initial embedding generation using models like TransE [309], TransD [198], and node2vec [310], followed by their application in RS through attention mechanisms in KSR [229] or generative models like BEM [176] and KTGAN [311].
 
 **Joint Learning Methods** optimize both KG embeddings and recommendation components simultaneously using a unified loss function. Examples include CKE [112], which integrates auto-encoders for item representations, and SHINE [312], which acquires user embeddings from heterogeneous graphs. Multi-Task Methods such as KTUP [221] and MKR [206] address KG-enhanced recommendation and KG completion concurrently, improving both entity/relation representations and recommendations.
 
