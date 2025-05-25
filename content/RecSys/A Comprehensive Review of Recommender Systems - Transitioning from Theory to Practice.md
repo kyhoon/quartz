@@ -5,6 +5,7 @@ tags:
   - paper
   - survey
   - recsys
+  - todo
 ---
 ## Abstract
 
@@ -37,7 +38,7 @@ Traditional RS methods can be categorized into collaborative filtering, content-
 
 **Graph-based Recommender Systems**
 
-GNNs can effectively address various practical challenges by modeling complex relationships in data.
+GNNs can effectively address various practical challenges by modeling complex **relationships** in data.
 
 ![[Pasted image 20250518182006.png]]
 
@@ -45,7 +46,7 @@ GNNs can effectively address various practical challenges by modeling complex re
 
 **Sequential and Session-based Recommender Systems**
 
-Sequential recommendation is commonly viewed as a next-item or next-basket prediction challenge [37]. Both the sequential and session-based RS leverage user action sequences to anticipate users’ future preferences [95]. Specifically, sequential RS consider the interaction histories of the users to predict future behaviour or users’ preferences. In contrast, session-based RS, detailed in survey [38], focus on short-term user activity for real-time recommendations. These approaches collectively enhance personalization and relevance across diverse platforms.
+Sequential recommendation is commonly viewed as a **next-item** or next-basket prediction challenge [37]. Both the sequential and session-based RS leverage user action sequences to anticipate users’ future preferences [95]. Specifically, sequential RS consider the interaction histories of the users to predict future behaviour or users’ preferences. In contrast, session-based RS, detailed in survey [38], focus on short-term user activity for real-time recommendations. These approaches collectively enhance personalization and relevance across diverse platforms.
 
 - [[Frequency Enhanced Hybrid Attention Network for Sequential Recommendation]]
 - [[Knowledge Prompt-tuning for Sequential Recommendation]]

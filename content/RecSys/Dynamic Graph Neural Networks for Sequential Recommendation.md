@@ -71,3 +71,9 @@ The message propagation mechanism aims to learn the message propagation informat
 **Recommendation and Optimization**
 
 ![[Pasted image 20250518191917.png]]
+
+## Experiments
+
+To evaluate the effectiveness of our model, we conduct experiments on three [Amazon](https://jmcauley.ucsd.edu/data/amazon/) datasets from real-world platforms [48]: Amazon-CDs, Amazon-Games, and AmazonBeauty. These datasets are widely used in evaluating sequential recommendation methods and are varying in terms of domains, sizes, and sparsity.
+
+![[Pasted image 20250525155300.png]]

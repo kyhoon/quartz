@@ -4,6 +4,7 @@ github: https://github.com/LeCAR-Lab/human2humanoid
 tags:
   - paper
   - robotics
+  - todo
 ---
 ## Abstract
 

@@ -1,0 +1,12 @@
+---
+url: https://papers.nips.cc/paper_files/paper/2018/hash/b2ab001909a8a6f04b51920306046ce5-Abstract.html
+github: https://github.com/Mehran-k/SimplE
+tags:
+  - paper
+  - recsys
+  - todo
+---
+## Abstract
+
+Knowledge graphs contain knowledge about the world and provide a structured representation of this knowledge. Current knowledge graphs contain only a small subset of what is true in the world. Link prediction approaches aim at predicting new links for a knowledge graph given the existing links among the entities. Tensor factorization approaches have proved promising for such link prediction problems. Proposed in 1927, Canonical Polyadic (CP) decomposition is among the first tensor factorization approaches. CP generally performs poorly for link prediction as it learns two independent embedding vectors for each entity, whereas they are really tied. We present a simple enhancement of CP (which we call SimplE) to allow the two embeddings of each entity to be learned dependently. The complexity of SimplE grows linearly with the size of embeddings. The embeddings learned through SimplE are interpretable, and certain types of background knowledge can be incorporated into these embeddings through weight tying. We prove SimplE is fully expressive and derive a bound on the size of its embeddings for full expressivity. We show empirically that, despite its simplicity, SimplE outperforms several state-of-the-art tensor factorization techniques. SimplE's code is available on GitHub at https://github.com/Mehran-k/SimplE.
+
