@@ -2,7 +2,6 @@
 url: https://arxiv.org/abs/2403.04436
 github: https://github.com/LeCAR-Lab/human2humanoid
 tags:
-  - paper
   - robotics
   - todo
 ---

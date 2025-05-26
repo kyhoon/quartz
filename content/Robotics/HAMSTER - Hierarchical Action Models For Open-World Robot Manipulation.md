@@ -2,7 +2,6 @@
 url: https://arxiv.org/abs/2502.05485
 github: https://github.com/liyi14/HAMSTER_beta
 tags:
-  - paper
   - robotics
   - todo
 ---

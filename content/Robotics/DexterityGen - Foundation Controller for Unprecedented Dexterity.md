@@ -1,7 +1,6 @@
 ---
 url: https://arxiv.org/abs/2502.04307
 tags:
-  - paper
   - robotics
   - todo
 ---

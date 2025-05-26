@@ -2,7 +2,6 @@
 url: https://arxiv.org/abs/2410.21229
 github: https://github.com/NVlabs/HOVER/
 tags:
-  - paper
   - robotics
   - todo
 ---

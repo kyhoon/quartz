@@ -2,7 +2,6 @@
 url: https://arxiv.org/abs/2201.11936
 github: https://github.com/apple/ml-sad
 tags:
-  - paper
   - recsys
   - todo
 ---

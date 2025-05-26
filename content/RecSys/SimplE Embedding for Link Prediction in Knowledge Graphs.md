@@ -2,7 +2,6 @@
 url: https://papers.nips.cc/paper_files/paper/2018/hash/b2ab001909a8a6f04b51920306046ce5-Abstract.html
 github: https://github.com/Mehran-k/SimplE
 tags:
-  - paper
   - recsys
   - todo
 ---

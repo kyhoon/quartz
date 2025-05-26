@@ -2,7 +2,6 @@
 url: https://arxiv.org/abs/2306.05636
 github: https://github.com/atoroghi/BCIE
 tags:
-  - paper
   - recsys
 ---
 ## Abstract

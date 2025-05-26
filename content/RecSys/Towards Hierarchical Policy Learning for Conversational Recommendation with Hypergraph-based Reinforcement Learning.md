@@ -1,7 +1,6 @@
 ---
 url: https://arxiv.org/abs/2305.02575
 tags:
-  - paper
   - recsys
 ---
 ## Abstract

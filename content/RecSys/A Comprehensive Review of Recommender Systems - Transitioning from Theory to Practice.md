@@ -2,7 +2,6 @@
 url: https://arxiv.org/abs/2407.13699
 github: https://github.com/VectorInstitute/Recommender-Systems-Survey
 tags:
-  - paper
   - survey
   - recsys
   - todo

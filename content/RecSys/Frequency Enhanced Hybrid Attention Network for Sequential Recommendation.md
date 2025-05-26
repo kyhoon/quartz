@@ -2,7 +2,6 @@
 url: https://arxiv.org/abs/2304.09184
 github: https://github.com/sudaada/FEARec
 tags:
-  - paper
   - recsys
 ---
 ## Abstract

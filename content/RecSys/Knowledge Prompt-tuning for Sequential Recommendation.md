@@ -2,7 +2,6 @@
 url: https://arxiv.org/abs/2308.08459
 github: https://github.com/zhaijianyang/KP4SR
 tags:
-  - paper
   - recsys
 ---
 ## Abstract

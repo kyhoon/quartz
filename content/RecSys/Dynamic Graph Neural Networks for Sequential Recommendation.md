@@ -1,7 +1,6 @@
 ---
 url: https://arxiv.org/abs/2104.07368
 tags:
-  - paper
   - recsys
 ---
 ## Abstract

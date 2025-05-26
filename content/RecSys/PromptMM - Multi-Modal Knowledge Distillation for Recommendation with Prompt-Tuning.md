@@ -1,7 +1,6 @@
 ---
 url: https://arxiv.org/abs/2402.17188
 tags:
-  - paper
   - recsys
   - todo
 ---
