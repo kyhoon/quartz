@@ -454,3 +454,440 @@ Just like when we have the potential outcome, we have the potential treatment st
 
 ... Students are not manipulating where they fall on the threshold. Just for illustrative purposes, the second plot shows what bunching would look like if students could manipulate where they fall on the threshold.
 
+
+## 17 - Predictive Models 101
+
+The first few chapters of part two will focus on estimating heterogeneous treatment effects. We will move from a world where all we cared about was the average treatment effect, $E[Y_1−Y_0]$, to one where we want to know how different units respond differently to the treatment $E[Y_1−Y_0 \mid X]$. This is the world where personalisation is paramount.
+
+The key takeaway here is that **if you can frame your business problem as a prediction problem, then machine learning is probably the right tool for the job**. I really can’t emphasize this enough. With all the hype around machine learning, I feel that people forget about this very important point and often end up making models that are very good at predicting something totally useless.
+
+
+## 18 - Heterogeneous Treatment Effects and Personalization
+
+Causal inference is then the process of estimating the causal relationship between T and Y under context X. Once we’ve done that, optimizing Y is just a matter of setting the treatment T in an optimal way
+
+$$
+\underset{T}{\text{argmax}} \, E[Y \mid X, T]
+$$
+In that sense, beyond the positive aspect of causal inference, we also have a normative motivation.
+
+Now, things will become less black and white. We want more than just the average treatment effect. We will allow the treatment to impact positively some people but not others.
+
+We want to personalize the treatment. In more technical terms, we want to estimate the Conditional Average Treatment Effect (CATE)
+
+$$
+E[Y_1 - Y_0 \mid X] \quad \text{or} \quad E[y'(t) \mid X]
+$$
+
+We’ve also contrasted this goal with that of a predictive model. Namely, we are rethinking the estimation task, from predicting Y in it’s raw format to predicting how $Y$ changes with $T$, $\delta y / \delta t$.
+
+
+## 19 - Evaluating Causal Models
+
+The trick is to use aggregate measurements of sensitivity. Even if you can’t estimate sensitivity individually, you can do it for a group and that is what we will leverage here.
+
+![[Pasted image 20250615134125.png]]
+
+In the image, we can see that the first model is somewhat good at predicting sales (high correlation with sales), but the groups it produces have roughly the same treatment effect, as shown in the plot on the bottom. Two of the three segments have the same sensitivity and only the last one has a different, lower sensitivity.
+
+Once we have the ordered groups, we can construct what we will call the **Cumulative Sensitivity Curve**. We first compute the sensitivity of the first group; then, of the first and the second and so on, until we’ve included all the groups. In the end, we will just compute the sensitivity for the entire dataset.
+
+![[Pasted image 20250615134747.png]]
+
+Second, a model is better to the degree that
+$$
+y^′(t)_k−y^′(t)_{k+a}
+$$
+is the largest, for any k and a>0. The intuition being that not only do we want the sensitivity of the top k units to be higher than the sensitivity of the units below them, but we want that difference to be as large as possible.
+
+![[Pasted image 20250615134913.png]]
+
+Needless to say, none of our models gets even close to an ideal sensitivity curve. The random model `rand_m` oscillates around the average sensitivity and never goes too far away from it. This means that the model can’t find groups where the sensitivity is different from the average one. As for the predictive model `pred_m`, it appears to be reversely ordering sensitivity, because the curve starts below the average sensitivity. Not only that, it also converges to the average sensitivity pretty quickly, at around 50% of the samples. Finally, the causal model `sensitivity_m` seems more interesting. It has this weird behavior at first, where the cumulative sensitivity increases away from the average, but then it reaches a point where we can treat about 75% of the units while keeping a pretty decent sensitivity of almost 0. This is probably happening because this model can identify the very low sensitivity (high price sensitivity) days. Hence, provided we don’t increase prices on those days, we are allowed to do it for most of the sample (about 75%), while still having a low price sensitivity.
+
+The next idea is a very simple, yet powerful improvement on top of the cumulative sensitivity. We will multiply the cumulative sensitivity by the proportional sample size. For example, if the cumulative sensitivity is, say -0.5 at 40%, we will end up with -0.2 (-0.5 * 0.4) at that point. Then, we will compare this with the theoretical curve produced by a random model.
+
+![[Pasted image 20250615135143.png]]
+
+... We managed to evaluate how good are models in ordering sensitivity even though we didn’t have a ground truth to compare against.
+
+
+## 20 - Plug-and-Play Estimators
+
+We’ve seen how to estimate the CATE using a linear regression with interactions between the treatment and the features
+
+$$
+y_i=\beta_0+\beta_1t_i+ \beta_2X_i+\beta_3t_iX_i+e_i.
+$$
+
+If we estimate this model, we can get estimates for $\tau(x)$
+
+$$
+\hat\tau(x)=\hat\beta_1+\hat\beta_3X_i
+$$
+
+Still, the linear models have some drawbacks. The main one being the linearity assumption on $X$. Notice that you don’t even care about $\beta_2$ on this model. But if the features $X$ don’t have a linear relationship with the outcome, your estimates of the causal parameters $\beta_1$ and $\beta_3$ will be off.
+
+Here is a crazy idea: let’s transform the outcome variable by multiplying it with the treatment.
+
+$$
+Y_i^∗=2Y_i∗T_i−2Y_i∗(1−T_i)
+$$
+
+So, if the unit was treated, you would take the outcome and multiply it by 2. If it wasn’t treated, you would take the outcome and multiply it by -2.
+
+To understand that, we need a bit of math. Because of random assignment, we have that $T \perp Y(0),Y(1)$, which is our old unconfoundedness friend. That implies that $E[T,Y(t)]=E[T]∗E[Y(t)]$, which is the definition of independence.
+
+![[Pasted image 20250615140159.png]]
+
+Now that we’ve solved the simple case, what about the more complicated case, where treatment is not 50% 50%, or not even randomly assigned? As it turns out, the answer is a bit more complicated, but not much. First, if we don’t have random assignment, we need at least conditional independence $T \perp Y(1),Y(0) \mid X$. That is, controlling for $X$, $T$ is as good as random. With that, we can generalize the transformed target to
+
+$$
+Y_i^∗=Y_i∗\frac{T_i−e(X_i)}{e(X_i)(1−e(X_i))}
+$$
+
+where $e(X_i)$ is the propensity score.
+
+![[Pasted image 20250615140612.png]]
+
+That is actually one of the biggest downsides of this target transformation technique. With this target transformation, you do get a lot of simplicity, since you can just transform the target and use any ML estimator to predict **heterogeneous** treatment effects. The cost of it is that you get a lot of **variance**. That’s because the transformed target is a very noisy estimate of the individual treatment effect and that variance gets transferred to your estimation.
+
+Another obvious downside of the target transformation method is that it only works for discrete or binary treatments. ... So, even though I couldn’t find anything regarding target transformations for continuous treatment, I came up with something that works in practice. Just keep in mind that I don’t have a super solid econometric research around it.
+
+$$
+\tau(x)=E[\partial Y_i(t)\mid X]=E[\tau_i \mid X]
+$$
+$$
+Y_i^∗=(Y_i−\bar{Y})\frac{(T_i−\bar{T})}{\sigma_T^2}
+$$
+In plain English, we would transform the original target by subtracting the mean from it, then we would multiply it by the treatment, from which we’ve also subtracted the mean from. Finally, we would divide it by the treatment variance. Alas, we have a target transformation for the continuous case.
+
+To show that this target transformation works, we need to remember that we are estimating the parameter for a local linear model
+
+$$
+Y_i=\alpha+\beta T_i+e_i \mid X_i=x
+$$
+
+In our example, those would be the linear models for the hot and cold days. Here, we are interested in the $\beta$ parameter, which is our conditional elasticity or CATE.
+
+![[Pasted image 20250615141246.png]]
+
+Having talked about the continuous case, there is still an elephant in the room we need to adress. We’ve assumed a linearity on the treatment effect. However, that is very rarely a reasonable assumption. Usually, treatment effects saturate in one form or another.
+
+The problem here is that **elasticity or treatment effect changes with the treatment itself**. In our example, the treatment effect is more intense at the beginning of the curve and smaller as prices get higher.
+
+There is no easy way out of this problem and I confess I’m still investigating what works best. For now, the thing that I do is try to think about the functional form of the treatment effect and somehow linearize it.
+
+... As a side note, besides target transformation, this method also goes by the name of **F-Learner**.
+
+
+## 21 - Meta Learners
+
+Meta learners are a simple way to leverage off-the-shelf predictive machine learning methods in order to solve the same problem we’ve been looking at so far: estimating the CATE. Again, none of them is the single best one and each one has its weakness.
+
+The first learner we will use is the **S-Learner**. This is the simplest learner we can think of. We will use a single (hence the S) machine learning model $M_s$ to estimate
+
+$$
+μ(x)=E[Y|T,X]
+$$
+
+To do so, we will simply include the treatment as a feature in the model that tries to predict the outcome $Y$.
+
+Then, we can make predictions under different treatment regimes. The difference in predictions between the test and control will be our CATE estimate
+
+$$
+\hat\tau(x)_i=M_s(X_i,T=1)−M_s(X_i,T=0)
+$$
+
+![[Pasted image 20250615142201.png]]
+
+To evaluate this model, we will look at the cumulative gain curve in the test set. I’m also plotting the gain curve in the train. Since the train is biased, this curve cannot give any indication if the model is good, but it can point us out if we are overfitting to the training set. When this happens, the curve in the train set will be super high. If you want to see what that looks like, try replacing the `max_depth` parameter from 3 to 20.
+
+Depending on the type of data that you have, the S-learner might do better or worse. In practice, I find that the S-learner is a good first bet for any causal problem, mostly due to its simplicity. Not only that, the S-learner can handle both continuous and discrete treatments, while the rest of the learners in this chapter can only deal with discrete treatments.
+
+The major disadvantage of the S-learner is that it tends to bias the treatment effect towards zero. Since the S-learner employs what is usually a regularized machine learning model, that regularization can restrict the estimated treatment effect. ‪Chernozhukov‬ et al (2016) outline this problem using simulated data:
+
+![[Pasted image 20250615142254.png]]
+
+Here, they plot the difference between the true causal effect (red outline) and the estimated causal effect, $\tau−\hat\tau$, using an S-learner. The estimated causal effect is heavily biased.
+
+The **T-learner** tries to solve the problem of discarding the treatment entirely by forcing the learner to first split on it. Instead of using a single model, we will use one model per treatment variable. In the binary case, there are only two models that we need to estimate (hence the name T):
+
+$$
+\begin{align}
+\mu_0(x) &= E[Y|T=0,X] \\
+\mu_1(x) &= E[Y|T=1,X]
+\end{align}
+$$
+
+Then, at prediction time, we can make counterfactual predictions for each treatment and get the CATE as follows.
+
+$$
+\hat\tau(x)_i=M_1(X_i)−M_0(X_i)
+$$
+
+![[Pasted image 20250615142438.png]]
+
+The T-Learner avoids the problem of not picking up on a weak treatment variable, but it can still suffer from regularization bias.
+
+![[Pasted image 20250615142533.png]]
+
+What happens here is that the model for the untreated can pick up the non linearity, but the model for the treated cannot, because we’ve used regularization to deal with a small sample size.
+
+The **X-learner** is significantly more complex to explain than the previous learner, but its implementation is quite simple, so don’t worry. The X-Learner has two stages and a propensity score model. The first one is identical to the T-learner. First, we split the samples into treated and untreated and fit a ML model for the treated and for control.
+
+$$
+\begin{align}
+\hat M_0(X) &≈ E[Y|T=0,X] \\
+\hat M_1(X) &≈ E[Y|T=1,X]
+\end{align}
+$$
+
+Now, things start to take a turn. For the second stage, we impute the treatment effect for the control and for the treated using the models above
+
+$$
+\begin{align}
+\hat\tau(X,T=0) &= \hat M_1(X,T=0)−Y_{T=0} \\
+\hat\tau(X,T=1) &= Y_{T=1}− \hat M_0(X,T=1)
+\end{align}
+$$
+
+Then, we fit two more models to predict those effects
+
+$$
+\begin{align}
+\hat M_{τ0}(X) &≈ E[\hat\tau(X)|T=0] \\
+\hat M_{τ1}(X) &≈ E[\hat\tau(X)|T=1]
+\end{align}
+$$
+Now, we need a way to combine the two in a way that gives more weight to the correct model. Here is where the propensity score model comes to play. Let $\hat e(x)$ be the propensity score model, we can combine the two second stage models as follows:
+
+$$
+\hat\tau(x)=\hat M_{\tau0}(X)\hat e(x) + \hat M_{τ1}(X)(1−\hat e(x))
+$$
+
+Since there are very few treated units, e^(x) is very small. This will give a very small weight to the wrong model M^τ0(X).
+
+![[Pasted image 20250615143133.png]]
+
+As we can see, compared to the T-learner, the X-learner does a much better job in correcting the wrong CATE estimated at the non linearity. In general the X-learner performs better when a treatment group is much larger than the other.
+
+![[Pasted image 20250615143144.png]]
+
+Again, the simplest thing we can do is using a single or **S-learner** with the treatment as a feature. This tends to work well when the treatment is not a **weak predictor** of the outcome. But if that’s not the case, the S-learner tends to be biased towards zero or even drop the treatment entirely. Adding a bit more complexity, we can force the learner to pick up the treatment by using a **T-learner**. Here, we fit one Machine Learning model per treatment level. This works fine when there are enough samples for all treatment levels, but it can fail when one treatment level has a **small sample size**, forcing a model to be **heavily regularized**. To fix that, we can add another level of complexity using an **X-learner**, where we have two fitting stages and we use a propensity score model to correct potential mistakes from models estimated with very few data points.
+
+
+## 22 - Debiased/Orthogonal Machine Learning
+
+Another bonus is that Debiased/Orthogonal ML works for both continuous and discrete treatments, something that neither the T, not X learner could do.
+
+**Frisch-Waugh-Lovell**
+
+Suppose you have a linear regression model with a set of features $X_1$ and another set of features $X_2$. You then estimate that model’s parameters.
+
+$$
+\hat Y = \hat\beta_1 X_1+ \hat\beta_2 X_2
+$$
+
+where $X_1$ and $X_2$ are feature matrices (one column per feature and one row per observation) and $\hat\beta_1$ and $\hat\beta_2$ are row vectors. You can get the exact same β1^ parameter by doing the following steps
+
+1. regress the outcome y on the second set of features $\hat y^∗= \hat\gamma_1 X_2$
+2. regress the first set of features on the second $\hat X_1= \hat\gamma_2 X_2$
+3. obtain the residuals $\tilde X_1=X_1−\hat X_1$ and $\tilde y_1=y− \hat y^*$
+4. regress the residuals of the outcome on the residuals of the features $\tilde y=\hat\beta_1 \tilde X_1$
+
+... First, regress the outcome on the features to get outcome residuals. Then, regress the treatment on the features to get treatment residuals. Finally, regress the outcome residuals on the feature residuals. This will yield the exact same estimate as if we regress the outcome on the features and treatment at the same time.
+
+Another way of saying this is that the treatment effect can be derived from **regression on residuals**, where we obtain the residuals from regressing Y on X and regress it on the residuals of regressing T on X. Let’s say that ∼ is the regression operator, so we can summarise FWL theorem as follows.
+
+$$
+(Y−(Y∼X))∼(T−(T∼X))
+$$
+
+**Double/Debiased ML** can be seen as Frisch, Waugh and Lovell theorem on steroids. The idea is very simple: use ML models when constructing the outcome and treatment residuals:
+
+$$
+Y_i−\hat M_y(X_i)= \tau \cdot (T_i− \hat M_t(X_i)) + \epsilon
+$$
+
+Where $\hat M_y(X_i)$ is estimating $E[Y|X]$ and $\hat M_t(X_i)$ is estimating $E[T|X]$.
+
+1. Estimate the outcome $Y$ with features $X$ using a flexible ML regression model $M_y$.
+2. Estimate the treatment $T$ with features $X$ using a flexible ML regression model $M_t$.
+3. Obtain the residuals $\tilde Y = Y−M_y(X)$ and $\tilde T=T−M_t(X)$
+4. regress the residuals of the outcome on the residuals of the treatment $\tilde Y= \alpha + \tau \tilde T$
+where $τ$ is the causal parameter ATE, which we can estimate, for example, with OLS.
+
+So far, we’ve seen how Double/Debiased ML allow us to focus on estimating the Average Treatment Effect (ATE), but it can also be used to estimate treatment effect heterogeneity or Conditional Average Treatment Effect (CATE). Essentially, we are now saying that the causal parameter τ changes depending on the unit’s covariates.
+
+$$
+Y_i−M_y(X_i)=\tau(X_i)\cdot(T_i−M_t(X_i))+\epsilon_i
+$$
+
+The Double/Debiased ML procedure with a final linear model is already very good, as we can see by the curve above. But, maybe we can do even better. As a matter of fact, this is a very general procedure that we can understand just like a meta-learner. Nie and Wager called it the **R-Learner**, as a way to recognise the work of Robinson (1988) and to emphasize the role of **residualization**.
+
+![[Pasted image 20250615150449.png]]
+
+... To answer that properly, let’s remember what is the underlying assumption that the Double/Debiased ML makes about the data generating process. These assumptions can be seen in the equation we’ve laid down before.
+
+$$
+\tilde Y_i= \tau(X_i)\tilde T_i + e_i
+$$
+
+In words, it says that the residualized outcome is equal to the residualized treatment multiplied by the conditional treatment effect. This mean that the **treatment impacts the outcome linearly**.
+
+So, does this mean that the non-parametric model can’t capture the non-linearity of the treatment effect? Again, not really… Rather, what is happening is that Double/ML **finds the locally linear approximation to the non-linear CATE**.
+
+![[Pasted image 20250615150722.png]]
+
+... “Great! I’ll give a lot of discounts to this unit! After all, for every 1 unit in discount, I’ll get 2 in sales”. However, that’s the wrong conclusion. The treatment effect is 2 only at that discount level.
+
+This means you have to be extra careful when extrapolating a nonlinear treatment effect to a new treatment level. If you are not, you might end up making very unprofitable decisions. Another way to put is is that, when treatment effect is not linear, even non-parametric Double/Debiased-ML will **struggle to make counterfactuals outcome predictions**. It will try to linearly extrapolate the treatment effect (TE) from a low treatment level to a high treatment level or the other way around. And, due to the non linearity, that extrapolation will likely be off.
+
+The final idea we will try is a fundamental shift in mentality. We will no longer try to estimate the linear approximation to the CATE. Instead, we will make counterfactual predictions.
+
+Here is how this will go down. First, let’s start with the traditional Double/Debiased-ML formulation, where we have the residualized version of the treatment and outcome.
+
+$$
+\tilde Y_i= \tau(X_i) \tilde T_i + e_i
+$$
+
+Now, I’ll move the treatment inside the treatment effect function. This allows the treatment effect to be non linear, that is to change with the treatment itself.
+
+$$
+\tilde Y_i= \tau(X_i, \tilde T_i) + e_i
+$$
+
+... Simply speaking, we will fit a ML model to predict the residualised outcome $\tilde Y$ from the residualized treatment $\tilde T$ together with the features $X$.
+
+Then, once we have this model, we will make 2 step counterfactual predictions. First we will have to make a prediction for the treatment in order to get $\tilde T$, then, we will feed that prediction, along with the features, in our final model $\hat\tau (X_i, \tilde T_i)$.
+
+First and foremost, it has the same problems all ML techniques have when applied naively to causal inference: **bias**. Since the final model is a regularized ML model, this regularization can bias the causal estimate to zero.
+
+The second problem has to do with the ML algorithm you choose. Here, we choose boosted trees. Trees are not very good at making smooth predictions. As a consequence, we can have discontinuities in the prediction curve. You can see that in the plots above: a stepwise behavior here and there. Also, trees are not very good at extrapolating, so this model might output weird predictions for prices never seen before.
+
+![[Pasted image 20250615151215.png]]
+
+![[Pasted image 20250615151227.png]]
+
+
+## 23 - Challenges with Effect Heterogeneity and Nonlinearity
+
+... But that is not the only challenge. Because treatment effects are so slippery, its estimators are often quite noisy. This has huge practical consequences for applications where we want to segment units by their treatment effect, like when we want to do personalized treatment allocation.
+
+We will now see that, sometimes, we can get a better treatment effect segmentation if we don’t directly try to estimate CATE, but instead focus on another **proxy** target, which usually has less variance. A common case when this happens is when the outcome variable of interest Y is binary.
+
+... How come the feature we know to drive effect heterogeneity, `age`, is worse for personalization when compared with a feature (`estimated_income`) we know not to modify the treatment effect? The answer lies in the **non-linearity of the outcome function**. Although `estimated_income` does not modify the effect of the nudge on the latent outcome, it does once we transform that latent outcome to conversion (at least indirectly). Conversion is not linear. This means that **its derivative changes depending on where you are**.
+
+... the derivative of high conversion is very low. But because conversion is also bounded at zero, it will also have a low derivative if it is already very low.
+
+![[Pasted image 20250615152445.png]]
+
+For instance, in our conversion problem, if the **average conversion is low**, we are at to the left of the logistic curve and the **treatment effect will be higher at high baseline conversion**. This would translate to a nudge policy that advocates for treating (nudging) those customers with an already high probability of conversion. On the other hand, if the **average conversion is high**, we will be to the right side of the logistic curve, where the derivative (and hence the treatment effect) will be **higher for those customers with lower baseline conversion**.
+
+This is certainly a lot to remember, but we can definitely simplify: **just treat whomever is closer to a baseline conversion of 50%**.
+
+... Just like in the case where the outcome was binary, in this example, **the treatment effect is correlated with the outcome**. The higher the sales (lower the price), the lower the absolute treatment effect; the lower the sales (higher the price) the lower the absolute treatment effect. But in this case, the situation is even more complicated because the **effect is not only correlated with the outcome, but with the treatment level**.
+
+So what can you do when treatment effects change depending on where you are in terms of both treatment and outcome? To be honest, this is still an active area of research. In practical terms, the best thing you can do is to be **very careful** when trying to answer which type of customer is more sensitive to the treatment. Make sure that the compared customer types all had the same treatment distribution. And, if not, be very skeptical of extrapolating the treatment effect.
+
+
+## 24 - The Difference-in-Differences Saga
+
+![[Pasted image 20250615155125.png]]
+
+ In fact, **TWFE (Two Way Fixed Effect), in its usual formulation, turns out to be biased in many real life applications**. This event caused a wave of revisions in multiple studies in economics that relied on this technique.
+
+For simplicity sake let’s consider the FE model without the time effects:
+
+$$
+y_{it}= \tau D_{it} + \gamma_i + e_{it}
+$$
+
+We can group the assumption this model makes into two groups
+
+1. Functional Form Assumptions:
+    - No heterogeneous effects in time (constant effects);
+    - Linearity in the covariates;
+    - Additive fixed effects.
+
+2. Strict Exogeneity
+    - Parallel trends
+    - No anticipation
+    - No unobserved time varying confounders
+    - Past treatment don’t affect current outcome (no carryover)
+    - Past outcome don’t affect current treatment (no feedback)
+
+![[Pasted image 20250615155534.png]]
+
+![[Pasted image 20250615155603.png]]
+
+The first three comparisons are no reason for concern, mostly because what they use as control is very well behaved. However, the fourth comparison, late vs early, is problematic. Notice that this comparison uses the early treated as a control. Also notice that this early treated control has a weird behavior. It climbs up sharply at the beginning. That is a reflection of our ATT not being instantaneous, but instead taking 10 days to mature.
+
+![[Pasted image 20250615155702.png]]
+
+More than that, we know it doesn’t work because it is too restrictive. It forces the effect to be the same \(\tau_{it}=\tau \ \forall i, t\), that is, it forces time homogeneity. If that is the problem, an easy fix would be to simply allow for a different effect for each time and unit.
+
+$$
+\text{Installs}_{it}=\sum_{i=0}^N\sum_{t=0}^T \tau_{it}D_{it}+\gamma_i+\theta_t+ e_{it}
+$$
+
+Unfortunately, we can’t fit that. It would have more parameters than we have data points.
+
+So, a natural improvement on that impractical model above is to allow the effect to change by cohort instead of units:
+
+$$
+\text{Installs}_{it}=\sum_{g=0}^G\sum_{t=0}^T \tau_{gt}D_{it}+\gamma_i+\theta_t+ e_{it}
+$$
+
+where `G` is the total number of cohorts and `g` marks each individual cohort.
+
+... When using DiD and TWFE, we often invoke the parallel trends assumption, without really thinking about what exactly that assumption means. Sadly, the parallel trends assumption is much more restrictive and less plausible than most people realize.
+
+We can never forget that TWFE (and DiD more generally) is a mix of **both functional form and independence assumptions**. In this chapter, we’ve only tackled the functional form problems, but there is still a big elephant in the room: the parallel trend assumption.
+
+
+## 25 - Synthetic Difference-in-Differences
+
+In the Diff-in-Diff chapter, we got the treatment effect by estimating the following linear model.
+
+$$
+Y_{it}= \beta_0 + \beta_1 Post_t+ \beta_2 Treated_i + \beta_3 Treated_i Post_t + e_{it}
+$$
+
+Where `post` is a time dummy indicating that the period is after the treatment and `treated` is a unit dummy marking units as being part of the treated group.
+
+![[Pasted image 20250615160250.png]]
+
+![[Pasted image 20250615160335.png]]
+
+![[Pasted image 20250615160432.png]]
+
+![[Pasted image 20250615160455.png]]
+
+There is also this $ζ^2$ term, which is theoretically motivated, but very complicated to explain, so I will unfortunately leave it as a bit of a mystery. In the reference, you can check the original article, which explains them. We define it like this:
+
+$$
+ζ=(N_{tr}∗T_{post})^{1/4} \sigma(\Delta it)
+$$
+
+where Δit is the first difference in the outcomes $Y_{it}−Y_{i(t−1)}$ and $\sigma(\Delta it)$ is the standard deviation of this difference. Here is the code to compute it.
+
+![[Pasted image 20250615161258.png]]
+
+staggered adoption
+
+![[Pasted image 20250615161358.png]]
+
+![[Pasted image 20250615161426.png]]
+
+The idea is to run a series of placebo tests, where we pretend a unit from the control pool is treated, when it actually isn’t. Then, we use SDID to estimate the ATT of this placebo test and store its result. We re-run this step multiple times, sampling a control unit each time. In the end, we will have an array of placebo ATTs. The variance of this array is the placebo variance of the SDID effect estimate, which we can use to construct a confidence interval.
+
+![[Pasted image 20250615161621.png]]
+
+Notice how the error for synthetic control is higher than for SDID. Again, that is because SDID captures a lot of the variance in the outcome via its time and unit fixed effects.
+
+First, there is an additional **L2 penalty** in the optimization of the unit weights which makes them more spread out across control units. Second, SDID allows for an **intercept** (and hence, extrapolation) when building such weights. Third, SDID introduces the use of **time weights**, which are not present in either DID nor SC. For this reason, I wouldn’t say SDID is just merging SC and SDID. It is rather building something new, inspired by these two approaches.
+
+... I also wouldn’t say that SDID is better or worse than traditional Synthetic Control. Each of them have different properties that might be appropriate or not, depending on the situation. For example, you might find yourself in a situation where allowing the **extrapolations** from SDID is dangerous. In which case, SC might be a good alternative.
+
+
