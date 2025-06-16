@@ -2,12 +2,13 @@
 url: https://matheusfacure.github.io/python-causality-handbook/landing-page.html
 tags:
   - causal
-  - todo
 ---
 ## 01 - Introduction To Causality
 
 **ATE** = Average Treatment Effect
+
 **ATT** = Average Treatment Effect on the Treated
+
 $$
 \begin{align}
 ATE &= E[Y_1 - Y_0] \\
@@ -48,6 +49,10 @@ In causal questions, we usually can argue in both ways: that X causes Y, or that
 ## 03 - Stats Review: The Most Dangerous Equation
 
 Moivre’s equation talks about a fundamental fact about the reality of information and records in the form of data: it is always imprecise.
+
+$$
+SE = \frac{\sigma}{\sqrt{n}}
+$$
 
 standard deviation, confidence intervals
 
